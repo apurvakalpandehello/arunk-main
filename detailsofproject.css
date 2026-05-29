@@ -1380,7 +1380,7 @@ body {
     project gallary
     ===================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -1392,29 +1392,29 @@ body {
 /* =========================
           BODY
 ========================= */
-
 body {
-    background: #ffffff;
+    background: #ffffff; /* चित्रात असल्यासारखा सुंदर ऑफ-व्हाइट बॅकग्राउंड */
+    overflow-x: hidden;
 }
 
 /* =========================
       GALLERY SECTION
 ========================= */
-
 .gallery-section {
     width: 100%;
-    padding: 10px 0;
-    overflow: hidden;
+    /* बदल: वरची स्पेस घालवण्यासाठी टॉप पॅडिंग 0px केले आणि खाली 160px ची मोकळी जागा दिली */
+    padding: 10px 20px 45px 20px; 
     background: #ffffff;
 }
 
 /* =========================
          HEADING
 ========================= */
-
 .gallery-heading {
     text-align: center;
-    margin-bottom: 50px;
+    /* बदल: टायटलच्या वरची नको असलेली गॅप काढली आणि खाली ५०px अंतर दिले */
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .gallery-heading h2 {
@@ -1422,214 +1422,217 @@ body {
     font-weight: 700;
     margin-bottom: 10px;
     color: #000000;
-    animation: fadeDown 1s ease;
+    animation: fadeDown 1s ease forwards;
 }
 
 .gallery-heading p {
     color: #A5BE9D;
     font-size: 17px;
     font-weight: 500;
-    animation: fadeUp 1s ease;
+    animation: fadeUp 1s ease forwards;
 }
 
 /* =========================
          WRAPPER
 ========================= */
-
 .gallery-wrapper {
     width: 100%;
-    overflow: hidden;
+    max-width: 1200px; /* मोठ्या स्क्रीनवर गॅलरी एका मर्यादेत नीट दिसेल */
+    margin: 0 auto;
+    overflow: visible; /* तिरपे कोपरे कट होऊ नयेत म्हणून विजिबल केले */
     position: relative;
 }
 
 /* =========================
-          TRACK
+          TRACK (रूपांतर: CSS Grid)
 ========================= */
-
 .gallery-track {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: max-content;
-    animation: scrollGallery 30s linear infinite;
+    /* बदल: जुना flex आणि scroll ॲनिमिशन पूर्णपणे बंद करून ४ कॉलम्सचे Grid बनवले */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; /* कार्ड्समधील अंतर */
+    width: 100%;
+    animation: none !important; /* ऑटो स्क्रोल बंद */
+    padding-bottom: 40px; /* खालच्या सेक्शनला कार्ड्स चिकटू नयेत म्हणून */
 }
 
 /* =========================
-          CARD
+          CARD (स्थिर कोलाज स्टाईल)
 ========================= */
-
 .gallery-card {
+    width: 100%; /* ग्रिडनुसार रुंदी ऑटोमॅटिक सेट होईल */
+    height: 380px; /* कार्डची योग्य उंची */
+    
+    /* जुने फिक्स मिन/मॅक्स साईझ काढून टाकले जेणेकरून रिस्पॉन्सिव्ह होईल */
+    min-width: 0;
+    min-height: 0;
+    max-width: none;
+    max-height: none;
 
-    width: 300px;
-    height: 350px;
-
-    min-width: 300px;
-    min-height: 350px;
-
-    max-width: 300px;
-    max-height: 350px;
-
-    border-radius: 20px;
+    border-radius: 4px; /* चित्रात असल्यासारखे टोकदार आणि पांढरी फ्रेम */
+    padding: 3px;
+    background: #ffffff; /* प्रतिमेभोवती पांढरी बॉर्डर फ्रेम */
     overflow: hidden;
-    flex-shrink: 0;
+    flex-shrink: 1;
     position: relative;
     cursor: pointer;
-    background: #ffffff;
-    transition: 0.5s ease;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.08);
-
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    
+    /* मुख्य बदल: पहिल्या फोटोप्रमाणे स्थिर तिरपा (-10deg) इफेक्ट */
+    -ms-transform: skewY(-10deg);
+    -webkit-transform: skewY(-10deg);
+    transform: skewY(-10deg);
+    
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
 }
+
+/* ====================================================
+   महत्त्वाचा बदल: ९ व्या इमेजपासून पुढच्या सर्व ८ क्लोन इमेजेस लपवणे
+====================================================== */
+.gallery-track .gallery-card:nth-child(n+9) {
+    display: none !important;
+}
+
+/* पहिल्या फोटोप्रमाणे वेव्ह (Wave) लुकसाठी कॉलम्सना वर-खाली करणे (फक्त पहिल्या ८ कार्ड्ससाठी) */
+.gallery-track .gallery-card:nth-child(4n+1) { transform: skewY(-10deg) translateY(-25px); } /* कॉलम १ */
+.gallery-track .gallery-card:nth-child(4n+2) { transform: skewY(-10deg) translateY(25px); }  /* कॉलम २ */
+.gallery-track .gallery-card:nth-child(4n+3) { transform: skewY(-10deg) translateY(-25px); } /* कॉलम ३ */
+.gallery-track .gallery-card:nth-child(4n)    { transform: skewY(-10deg) translateY(25px); }  /* कॉलम ४ */
 
 /* =========================
        IMAGE FIX SIZE
 ========================= */
-
 .gallery-card img {
-
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: 0.6s ease;
-
+    transition: transform 0.5s ease;
 }
 
 /* =========================
         HOVER EFFECT
 ========================= */
-
+/* माउस नेल्यावर कार्ड सरळ (0deg) होईल, वर-खाली असणारी जागा नॉर्मल होईल आणि झूम होईल */
 .gallery-card:hover {
-    transform: translateY(-10px);
+    -ms-transform: scale(1.06) skewY(0deg) translateY(0px) !important;
+    -webkit-transform: scale(1.06) skewY(0deg) translateY(0px) !important;
+    transform: scale(1.06) skewY(0deg) translateY(0px) !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10; /* कार्ड वर दिसण्यासाठी */
 }
 
 .gallery-card:hover img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 /* =========================
           OVERLAY
 ========================= */
-
 .gallery-card::before {
-
     content: '';
     position: absolute;
     inset: 0;
-
-    background: linear-gradient(to top,
-            rgba(0, 0, 0, 0.25),
-            transparent);
-
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
     z-index: 1;
-
+    pointer-events: none;
 }
 
 /* =========================
-        AUTO SCROLL
+       TEXT ANIMATION KEYFRAMES
 ========================= */
-
-@keyframes scrollGallery {
-
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-
-}
-
-/* =========================
-      TEXT ANIMATION
-========================= */
-
 @keyframes fadeDown {
-
     from {
         opacity: 0;
-        transform: translateY(-40px);
+        transform: translateY(-30px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
 @keyframes fadeUp {
-
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(30px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
-/* =========================
-         RESPONSIVE
-========================= */
+/* ====================================================
+   FULLY RESPONSIVE MEDIA QUERIES (Small to Large Screens)
+====================================================== */
 
-@media(max-width:768px) {
-
+/* १. Extra Large Desktops & 4K Monitors (1400px आणि त्यापेक्षा मोठे) */
+@media (min-width: 1400px) {
+    .gallery-wrapper {
+        max-width: 1400px;
+    }
     .gallery-card {
-
-        width: 180px;
-        height: 180px;
-
-        min-width: 180px;
-        min-height: 180px;
-
-        max-width: 180px;
-        max-height: 180px;
-
+        height: 420px; /* मोठ्या स्क्रीनवर उंची थोडी वाढवली */
     }
-
-    .gallery-heading h2 {
-        font-size: 30px;
-    }
-
 }
 
-@media(max-width:480px) {
-
-    .gallery-section {
-        padding: 60px 0;
-    }
-
-    .gallery-card {
-
-        width: 140px;
-        height: 140px;
-
-        min-width: 140px;
-        min-height: 140px;
-
-        max-width: 140px;
-        max-height: 140px;
-
-    }
-
+/* २. Tablets & Small Laptops (769px ते 1024px) */
+@media (max-width: 1024px) {
     .gallery-track {
-        gap: 12px;
+        grid-template-columns: repeat(2, 1fr); /* ४ ऐवजी २-२ चे कॉलम्स दिसतील */
+        gap: 30px;
     }
+    .gallery-card {
+        height: 320px;
+        /* टॅब्लेटवर वर-खाली असणारा वेव्ह इफेक्ट नॉर्मल केला जेणेकरून लेआउट बिघडणार नाही */
+        transform: skewY(-10deg) translateY(0px) !important; 
+    }
+    .gallery-section {
+        padding-bottom: 100px;
+    }
+}
 
+/* ३. Large Mobile Screens (481px te 768px) */
+@media (max-width: 768px) {
     .gallery-heading h2 {
-        font-size: 24px;
+        font-size: 32px;
     }
-
     .gallery-heading p {
-        font-size: 14px;
+        font-size: 15px;
     }
+    .gallery-track {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .gallery-card {
+        height: 240px;
+        transform: skewY(-10deg) translateY(0px) !important;
+    }
+}
 
+/* ४. Small to Medium Mobile Screens (320px te 480px) */
+@media (max-width: 480px) {
+    .gallery-section {
+        padding: 0px 15px 80px 15px;
+    }
+    .gallery-heading {
+        margin-bottom: 35px;
+    }
+    .gallery-heading h2 {
+        font-size: 26px;
+    }
+    .gallery-heading p {
+        font-size: 13px;
+    }
+    .gallery-track {
+        grid-template-columns: repeat(1, 1fr); /* मोबाईलवर एकाखाली एक १ फुल-विड्थ इमेज दिसेल */
+        gap: 25px;
+    }
+    .gallery-card {
+        height: 220px;
+        transform: skewY(-8deg) translateY(0px) !important; /* मोबाईलवर तिरपेपणा थोडा कमी (-8deg) केला जेणेकरून फोटो नीट दिसेल */
+    }
 }
 
 /* =====================
