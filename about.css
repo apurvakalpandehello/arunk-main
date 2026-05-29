@@ -1,0 +1,2035 @@
+/*========================
+  NAVBAR
+========================= */
+/* --- Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --primary-dark-green: #0a2411;
+  --cgreen: #0b2d13; /* Your custom green color matching the border/overlay tints */
+  --font-editorial: "Cinzel", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --bg-ivory: #f7f7f4;
+  --transition-panel: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-ivory);
+}
+
+/* --- Base Transparent Navbar Configuration --- */
+.premium-navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 1000;
+  background: transparent;
+  border-bottom: 1px solid rgba(11, 45, 19, 0.08);
+  transition: var(--transition-panel);
+}
+
+.nav-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 60px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Premium Logo Integration & Ayatakruti Animation Frame --- */
+.nav-logo-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  text-decoration: none;
+  height: auto;
+  padding: 5px 0;
+}
+
+.premium-nav-logo-img {
+  height: 120px; /* Balanced tracking proportion to match header depth */
+  max-width: 200px; /* Fluid boundary protective layout constraints */
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transform: scale(1);
+  filter: brightness(1) contrast(1);
+  will-change: transform, filter;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+}
+
+/* Horizontal linear flash mask engine */
+.nav-logo-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: none;
+}
+
+/* Header image actions triggers */
+.nav-logo-container:hover .premium-nav-logo-img {
+  transform: scale(1.03);
+  filter: brightness(1.1) contrast(1.01);
+}
+
+.nav-logo-container:hover::after {
+  left: 200%;
+  transition: left 0.9s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+/* --- Menu Grid Links System --- */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+  height: 100%;
+}
+
+.nav-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary-dark-green);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 0;
+}
+
+/* --- Action Button --- */
+.nav-btn {
+  background-color: var(--primary-dark-green);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* --- PURE CSS HOVER CONTROLS --- */
+.premium-navbar:hover {
+  background-color: var(--bg-ivory);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+}
+
+/* --- Base Mobile Toggle Button Styles with Background --- */
+.nav-toggle {
+  display: none;
+  background-color: var(--primary-dark-green);
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  z-index: 1001;
+  padding: 0;
+  box-shadow: 0 4px 15px rgba(10, 36, 17, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-action-wrapper {
+  display: none;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 36, 17, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT RESPONSES (MODIFIED FOR INNER DRAWER NAVIGATION)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .nav-container {
+    padding: 0 30px;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .desktop-only-btn {
+    display: none !important;
+  }
+
+  .mobile-action-wrapper {
+    display: block;
+  }
+
+  .mobile-action-wrapper .nav-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 14px 0;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: var(--bg-ivory);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 110px 40px 40px 40px;
+    gap: 0;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-item {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(11, 45, 19, 0.06);
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 20px 0;
+    justify-content: space-between;
+  }
+
+  .nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 20px;
+  }
+  .premium-nav-logo-img {
+    height: 42px; /* Smooth scale down to optimize viewport overhead on portable panels */
+  }
+}
+
+/* ========================
+navbar
+=========================  */
+
+/* ==============================
+   our story
+============================== */
+
+
+:root {
+    --bg-pure-white: #ffffff;
+    --text-solid-black: #000000;
+    --text-deep-charcoal: #1a1a1a;
+    --text-muted-gray: #555555;
+    --blueprint-accent: #2E8B57; /* SeaGreen Signature line & core text color */
+    --laser-glow: rgba(46, 139, 87, 0.4);
+}
+
+/* Section Container Setup */
+.story-section {
+    background-color: var(--bg-pure-white);
+    padding: 140px 5%;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-deep-charcoal);
+    overflow: hidden;
+}
+
+.story-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 70px;
+    align-items: center;
+}
+
+/* Content Panel Layout */
+.story-subtitle {
+    color: var(--blueprint-accent);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.story-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--blueprint-accent); /* Mla ha text SeaGreen color madhe pahije hota */
+    letter-spacing: -0.5px;
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+.story-main-desc {
+    font-size: 1.2rem;
+    line-height: 1.75;
+    font-weight: 500;
+    color: var(--text-solid-black); /* Description text is kept in black for high contrast */
+    margin-bottom: 22px;
+}
+
+.story-sub-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted-gray);
+    margin-bottom: 40px;
+}
+
+/* Corporate Metrics Grid */
+.story-metrics {
+    display: flex;
+    gap: 50px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 30px;
+}
+
+.metric-num {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--blueprint-accent); /* Numbers elements are set to SeaGreen */
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.metric-lbl {
+    font-size: 0.85rem;
+    color: var(--text-muted-gray);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+/* --- LIGHT SCHEMATIC TRANSITION ENGINE --- */
+.story-image-side {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.reveal-card-container {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+    background: #fdfdfd;
+}
+
+/* Real Image Base Structure */
+.real-image-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.real-image-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Architecture Drafting Tracing Paper Layer */
+.blueprint-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fafbfc; /* Engineering sketch pad tone */
+    z-index: 2;
+    clip-path: inset(0 0 0 0); /* Managed smoothly via GSAP logic */
+}
+
+.blueprint-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* SVG Line Engine Properties */
+.blueprint-stroke {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    filter: drop-shadow(0px 2px 4px rgba(46, 139, 87, 0.2));
+}
+
+/* Laser Scan Sweep Line Divider */
+.glow-scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--blueprint-accent), transparent);
+    box-shadow: 0 0 12px 3px var(--blueprint-accent);
+    z-index: 3;
+    pointer-events: none;
+    left: 100%;
+}
+
+/* Mobile-First Responsive Breakpoints */
+@media (max-width: 991px) {
+    .story-section {
+        padding: 130px 6%;
+    }
+    .story-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    .story-title {
+        font-size: 2.4rem;
+    }
+    .reveal-card-container {
+        height: 360px;
+    }
+}
+
+   /* ==============================
+   our story
+   ============================== */
+
+
+    /* ========================
+   Design Process Section
+   ======================== */
+
+
+   :root {
+    --bg-white: #ffffff;
+    --accent-seagreen: #2E8B57;
+    --text-black: #000000;
+    --text-dark-gray: #222222;
+    --text-muted: #666666;
+    --card-shadow: rgba(46, 139, 87, 0.08);
+}
+
+.timeline-section {
+    background-color: var(--bg-white);
+    padding: 10px 5%;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.timeline-subtitle {
+    color: var(--accent-seagreen);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.timeline-main-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-black);
+    margin-bottom: 80px;
+}
+
+/* Timeline Layout Grid */
+.timeline-container {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* Center Backbone Line */
+.timeline-center-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #e2e8f0;
+    transform: translateX(-50%);
+    border-radius: 4px;
+}
+
+/* Dynamic SeaGreen Glowing Progress Bar */
+.timeline-progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 0%; /* Dynamic expansion via GSAP Script */
+    background: linear-gradient(to bottom, #4ade80, var(--accent-seagreen));
+    box-shadow: 0 0 15px var(--accent-seagreen);
+    border-radius: 4px;
+}
+
+/* Individual Rows */
+.timeline-item {
+    position: relative;
+    width: 50%;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.timeline-item.right-card {
+    left: 50%;
+    justify-content: flex-start;
+}
+
+.timeline-item.left-card {
+    left: 0;
+    padding-right: 45px;
+}
+
+.timeline-item.right-card {
+    padding-left: 45px;
+}
+
+/* 3D Floating Luxury Card Design */
+.timeline-card {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    background: #ffffff;
+    border: 1px solid rgba(46, 139, 87, 0.15);
+    border-radius: 16px;
+    padding: 35px;
+    text-align: left;
+    box-shadow: 0 15px 35px var(--card-shadow);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    will-change: transform;
+    transition: box-shadow 0.3s ease;
+}
+
+.timeline-card:hover {
+    box-shadow: 0 20px 45px rgba(46, 139, 87, 0.2);
+}
+
+/* Glow ring effect inside cards on hover */
+.card-glow-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 16px;
+    pointer-events: none;
+    border: 2px solid transparent;
+    transition: border-color 0.4s ease;
+}
+
+.timeline-card:hover .card-glow-overlay {
+    border-color: var(--accent-seagreen);
+}
+
+/* Typography Inside 3D Cards */
+.card-year {
+    display: inline-block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-seagreen); /* Years set to SeaGreen */
+    margin-bottom: 10px;
+    transform: translateZ(30px); /* 3D pop effect */
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-black); /* Heading set to Black */
+    margin-bottom: 12px;
+    transform: translateZ(25px);
+}
+
+.card-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    transform: translateZ(20px);
+}
+
+/* Timeline Nodes/Dots on the Center Line */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border: 4px solid var(--accent-seagreen);
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: 0 0 10px var(--accent-seagreen);
+    transition: transform 0.3s ease;
+}
+
+.timeline-item.left-card::after {
+    right: -8px;
+}
+
+.timeline-item.right-card::after {
+    left: -8px;
+}
+
+/* --- FULLY RESPONSIVE BREAKPOINT (MOBILE & TABLET) --- */
+@media (max-width: 850px) {
+    .timeline-center-line {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        padding-left: 65px !important;
+        padding-right: 0 !important;
+        justify-content: flex-start !important;
+    }
+
+    .timeline-item::after {
+        left: 22px !important;
+    }
+    
+    .timeline-main-title {
+        font-size: 2.2rem;
+        margin-bottom: 50px;
+    }
+    
+    .timeline-card {
+        max-width: 100%;
+    }
+}
+
+    /* ========================
+   Design Process Section
+   ======================== */
+
+
+   /* ========================
+   Philosophy Section
+   ======================== */
+
+
+   :root {
+    --adcphi-pure-white: #ffffff;
+    --adcphi-solid-black: #000000;
+    --adcphi-deep-charcoal: #1a1a1a;
+    --adcphi-muted-gray: #555555;
+    --adcphi-accent: #2E8B57; /* SeaGreen Core */
+    --adcphi-glow-soft: rgba(46, 139, 87, 0.08);
+}
+
+.adcphi-section {
+    background-color: var(--adcphi-pure-white);
+    padding: 10px 5%;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.adcphi-ambient-glow {
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(46, 139, 87, 0.05) 0%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.adcphi-particles-wrap {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0; z-index: 2;
+    pointer-events: none;
+}
+
+.adcphi-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--adcphi-accent);
+    border-radius: 50%; opacity: 0.2;
+}
+
+.adcphi-main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.150fr 0.850fr;
+    gap: 80px; 
+    align-items: stretch; /* डाव्या-उजव्या भागाची उंची समान ठेवते */
+    position: relative;
+    z-index: 3;
+}
+
+.adcphi-content-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    min-height: 550px; 
+    height: 100%;
+}
+
+.adcphi-subtitle {
+    color: var(--adcphi-accent); 
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.adcphi-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    color: var(--adcphi-solid-black); 
+    line-height: 1.2;
+    margin-bottom: 30px;
+}
+
+.adcphi-main-desc {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: var(--adcphi-deep-charcoal);
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.adcphi-highlight-text {
+    color: var(--adcphi-muted-gray);
+}
+
+/* Interactive Text Highlights Links */
+.adcphi-element-lnk {
+    font-weight: 600;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.adcphi-element-lnk.active {
+    color: var(--adcphi-accent);
+    text-decoration: underline;
+}
+
+.adcphi-sub-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--adcphi-muted-gray);
+}
+
+/* --- RIGHT SIDE: Card Holder --- */
+.adcphi-visual-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 550px; 
+    height: 100%;
+}
+
+.adcphi-scene-3d {
+    position: relative;
+    width: 100%;
+    max-width: 480px; 
+    height: 500px; 
+    transform-style: preserve-3d;
+    perspective: 1200px;
+}
+
+.adcphi-card-3d {
+    width: 100%;
+    height: 100%;
+}
+
+.adcphi-card-inner {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(46, 139, 87, 0.12);
+    border-radius: 16px;
+    padding: 24px; 
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-shadow: 0 12px 40px var(--adcphi-glow-soft);
+}
+
+/* --- LARGE SCROLLABLE IMAGE BOX --- */
+.adcphi-img-box {
+    width: 240px; 
+    height: 420px; 
+    margin-top: 10px; 
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    position: relative;
+    cursor: ns-resize; /* माऊस व्हील स्क्रोल दर्शवणारा कर्सर */
+}
+
+/* Stack images over one another */
+.adcphi-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.1) translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none;
+}
+
+.adcphi-slide.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+/* Dynamic Scroll Helper Overlay Text */
+.adcphi-scroll-indicator {
+    position: absolute;
+    bottom: 12px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.adcphi-card-info {
+    text-align: left;
+}
+
+.adcphi-num {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--adcphi-accent); 
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.adcphi-card-info h3 {
+    font-size: 1.4rem; 
+    font-weight: 700;
+    color: var(--adcphi-solid-black); 
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Responsive Scaling */
+@media (max-width: 991px) {
+    .adcphi-main-container { grid-template-columns: 1fr; gap: 40px; }
+    .adcphi-content-side { min-height: auto; }
+    .adcphi-scene-3d { max-width: 100%; height: 480px; }
+    .adcphi-img-box { width: 180px; height: 340px; }
+}
+
+
+   /* ========================
+   Philosophy Section
+   ======================== */
+
+    /* ========================
+   Core Team
+   ======================== */
+
+    :root {
+    --adctm-bg-white: #ffffff;
+    --adctm-brand-dark: #111111;
+    --adctm-brand-gray: #1a1a1a;
+    --adctm-muted-text: #666666;
+    --adctm-accent-green: #2E8B57; /* SeaGreen Tone */
+    --adctm-card-bg: #fcfcfc;
+    --adctm-card-border: rgba(46, 139, 87, 0.08);
+}
+
+/* Section Foundation setup */
+.adctm-section {
+    background-color: var(--adctm-bg-white);
+    padding: 10px 0; /* वर आणि खाली योग्य अंतर दिले */
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative Ambient Background Filters */
+.adctm-glow-left {
+    position: absolute;
+    top: 30%; left: -10%;
+    width: 450px; height: 450px;
+    background: radial-gradient(circle, rgba(46, 139, 87, 0.04) 0%, transparent 75%);
+    pointer-events: none;
+    z-index: 1;
+}
+.adctm-glow-right {
+    position: absolute;
+    bottom: 10%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(46, 139, 87, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Header Context */
+.adctm-header {
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+    padding: 0 5%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.adctm-subtitle {
+    color: var(--adctm-accent-green);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.adctm-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--adctm-brand-dark);
+    line-height: 1.2;
+    margin-bottom: 25px;
+}
+
+.adctm-desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--adctm-muted-text);
+}
+
+/* --- THE INFINITE LUXURY CAROUSEL WINDOW --- */
+.adctm-carousel-window {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    padding: 20px 0;
+}
+
+/* Soft mask gradients over left/right edge spaces for an ultra-premium aesthetic blend */
+.adctm-carousel-window::before,
+.adctm-carousel-window::after {
+    content: "";
+    position: absolute;
+    top: 0; width: 150px; height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+.adctm-carousel-window::before {
+    left: 0;
+    background: linear-gradient(to right, var(--adctm-bg-white) 15%, transparent 100%);
+}
+.adctm-carousel-window::after {
+    right: 0;
+    background: linear-gradient(to left, var(--adctm-bg-white) 15%, transparent 100%);
+}
+
+/* The Marquee Track Grid wrapper */
+.adctm-track {
+    display: flex;
+    width: max-content; 
+    gap: 35px;
+    animation: adctmMarqueeLoop 30s linear infinite; /* 30 सेकंदात स्मूथ कंटिन्यूअस रन होईल */
+}
+
+/* HOVER PAUSE IMPLEMENTATION */
+.adctm-carousel-window:hover .adctm-track {
+    animation-play-state: paused;
+}
+
+/* Premium Architecture Team Card Box */
+.adctm-card {
+    width: 380px;
+    background: var(--adctm-card-bg);
+    border: 1px solid var(--adctm-card-border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.01);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.adctm-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(46, 139, 87, 0.2);
+    box-shadow: 0 20px 50px rgba(46, 139, 87, 0.06);
+}
+
+/* Architectural Tall Image Frame Layout */
+.adctm-img-wrapper {
+    width: 100%;
+    height: 280px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    background: #eaeaea;
+}
+
+.adctm-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.adctm-card:hover .adctm-img-wrapper img {
+    transform: scale(1.05);
+}
+
+/* Bio Content Fields Layout */
+.adctm-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.adctm-info h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--adctm-brand-dark);
+    margin: 0 0 6px 0;
+}
+
+.adctm-info h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--adctm-accent-green);
+    margin: 0 0 14px 0;
+    letter-spacing: 0.5px;
+}
+
+.adctm-info p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--adctm-muted-text);
+    margin: 0;
+}
+
+/* --- FIX: UPDATED MATHEMATICAL LOOP FOR GAP COMPENSATION --- */
+@keyframes adctmMarqueeLoop {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* पहिल्या सेटची अचूक रुंदी मोजून हा ट्रॅक विना-झटका (Zero Glitch) रिसेट होईल */
+        transform: translateX(calc(-50% - 17.5px)); 
+    }
+}
+
+/* --- FULL RESPONSIVE VIEWPORT CONTROLLERS --- */
+@media (max-width: 991px) {
+    .adctm-section { padding: 60px 0; }
+    .adctm-title { font-size: 2.4rem; }
+    .adctm-card { width: 320px; padding: 20px; gap: 15px; }
+    .adctm-img-wrapper { height: 240px; }
+    .adctm-track { gap: 25px; animation-duration: 25s; }
+    @keyframes adctmMarqueeLoop {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 12.5px)); }
+    }
+}
+
+@media (max-width: 575px) {
+    .adctm-title { font-size: 2rem; }
+    .adctm-carousel-window::before, .adctm-carousel-window::after { width: 60px; }
+}
+
+
+    /* ========================
+   Core Team
+   ======================== */
+
+   /* ========================
+   Why Choose Us
+   ======================== */
+
+    :root {
+    --cinrev-pure-white: #ffffff;
+    --cinrev-deep-black: #0d0d0d;
+    --cinrev-charcoal: #1e1e1e;
+    --cinrev-muted: #666666;
+    --cinrev-accent-green: #2E8B57; /* Signature SeaGreen Core */
+    --cinrev-card-border: rgba(46, 139, 87, 0.1);
+    --cinrev-card-shadow: rgba(0, 0, 0, 0.04);
+}
+
+/* Base Layout Config */
+.cinrev-section {
+    background-color: var(--cinrev-pure-white);
+    padding: 20px 0;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Subtle Organic Radial Backdrop Mesh */
+.cinrev-ambient-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    top: -10%; left: -10%;
+    background: radial-gradient(circle, rgba(46, 139, 87, 0.04) 0%, transparent 75%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cinrev-grid-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.008) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.008) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Adaptive Master Container Setup */
+.cinrev-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 4%;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* --- LEFT SIDE: Kinetic Typography Elements --- */
+.cinrev-left-content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    will-change: transform, opacity;
+}
+
+.cinrev-tagline {
+    color: var(--cinrev-accent-green);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.cinrev-heading {
+    font-size: 3.8rem;
+    font-weight: 800;
+    color: var(--cinrev-deep-black);
+    line-height: 1.15;
+    margin-bottom: 25px;
+    letter-spacing: -1px;
+}
+
+.cinrev-heading .cinrev-highlight {
+    color: var(--cinrev-accent-green);
+    position: relative;
+    display: inline-block;
+}
+
+.cinrev-lead-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--cinrev-muted);
+    margin-bottom: 40px;
+}
+
+.cinrev-btn-primary {
+    display: inline-block;
+    padding: 14px 34px;
+    background-color: var(--cinrev-deep-black);
+    color: var(--cinrev-pure-white);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.cinrev-btn-primary:hover {
+    background-color: var(--cinrev-accent-green);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(46, 139, 87, 0.25);
+}
+
+/* --- RIGHT SIDE: Luxury 3D Spatial Grid --- */
+.cinrev-right-visuals {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    /* Enable 3D perspective field layout across container track space */
+    perspective: 2000px;
+    transform-style: preserve-3d;
+}
+
+/* Luxury Interactive Architecture 3D Box Card Structure */
+.cinrev-card {
+    background: #ffffff;
+    border: 1px solid var(--cinrev-card-border);
+    border-radius: 20px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 10px 40px var(--cinrev-card-shadow);
+    transform-style: preserve-3d; /* Force nested items into 3D plane layers */
+    will-change: transform, opacity;
+    transition: border-color 0.4s ease;
+}
+
+/* Premium Dynamic Interactive Background Lighting Spark */
+.cinrev-card-bg-glow {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 20px;
+    background: radial-gradient(800px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(46, 139, 87, 0.04), transparent 40%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cinrev-card-inner {
+    display: contents;
+}
+
+/* Structural Image Box Component */
+.cinrev-img-box {
+    height: 140px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transform: translateZ(25px); /* Pops the asset out into 3D Space */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cinrev-img-box img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+/* Typography Body Component */
+.cinrev-card-body {
+    text-align: left;
+    position: relative;
+    transform: translateZ(15px); /* Secondary lower depth dimensional push */
+}
+
+.cinrev-card-num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cinrev-accent-green);
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.cinrev-card-body h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--cinrev-deep-black);
+    margin: 0 0 10px 0;
+    transition: color 0.3s ease;
+}
+
+.cinrev-card-body p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--cinrev-muted);
+    margin: 0;
+}
+
+/* Staggered Spatial Layout Layer Configuration offsets for right visual field */
+.cinrev-card:nth-child(2) { margin-left: 30px; }
+.cinrev-card:nth-child(3) { margin-left: 60px; }
+
+/* Global State Layer Hover System Actions */
+.cinrev-card:hover {
+    border-color: rgba(46, 139, 87, 0.25);
+    box-shadow: 0 30px 60px rgba(46, 139, 87, 0.06);
+}
+.cinrev-card:hover .cinrev-img-box {
+    transform: translateZ(45px) scale(1.03); /* Amplifies dimensional gap on hover */
+}
+.cinrev-card:hover .cinrev-img-box img {
+    transform: scale(1.08);
+}
+.cinrev-card:hover .cinrev-card-body h3 {
+    color: var(--cinrev-accent-green);
+}
+
+/* --- FULL RESPONSIVE VIEWPORT STYLING CONTROLLERS --- */
+@media (max-width: 1024px) {
+    .cinrev-heading { font-size: 3rem; }
+    .cinrev-container { gap: 40px; }
+    .cinrev-card:nth-child(2), .cinrev-card:nth-child(3) { margin-left: 0; } /* Remove cascading offsets for symmetry */
+}
+
+@media (max-width: 991px) {
+    .cinrev-section { padding: 90px 0; }
+    .cinrev-container { grid-template-columns: 1fr; gap: 60px; }
+    .cinrev-left-content { text-align: center; align-items: center; }
+    .cinrev-right-visuals { max-width: 650px; margin: 0 auto; width: 100%; }
+}
+
+@media (max-width: 575px) {
+    .cinrev-heading { font-size: 2.3rem; }
+    .cinrev-card { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+    .cinrev-img-box { height: 180px; }
+}
+
+   /* ========================
+   Why Choose Us
+   ======================== */
+
+   /* ========================
+   Testimonials
+   ======================== */
+
+   :root {
+    --flttst-white: #ffffff;
+    --flttst-dark: #111111;
+    --flttst-muted: #555555;
+    --flttst-accent: #2E8B57; /* SeaGreen Brand Accent */
+    --flttst-glass-bg: rgba(255, 255, 255, 0.45);
+    --flttst-glass-border: rgba(46, 139, 87, 0.15);
+}
+
+/* Section Wrapper Foundation */
+.flttst-section {
+    background-color: var(--flttst-white);
+    padding: 10px 0;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Luxury Background Ambient Blobs */
+.flttst-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.12;
+    z-index: 1;
+    pointer-events: none;
+}
+.flttst-blob-1 {
+    width: 500px; height: 500px;
+    background: var(--flttst-accent);
+    top: -10%; right: -5%;
+}
+.flttst-blob-2 {
+    width: 600px; height: 600px;
+    background: #4682B4; /* Soft SteelBlue complementary tone */
+    bottom: -15%; left: -10%;
+}
+
+.flttst-grid-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.005) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.005) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Grid Containers Setup */
+.flttst-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 4%;
+    position: relative;
+    z-index: 2;
+}
+
+.flttst-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 80px auto;
+}
+
+.flttst-subtitle {
+    color: var(--flttst-accent);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.flttst-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--flttst-dark);
+    line-height: 1.2;
+}
+
+/* Main Cards Layout Display */
+.flttst-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    align-items: start;
+    perspective: 1500px; /* Crucial for beautiful 3D Depth */
+}
+
+/* --- THE PREMIUM 3D GLASSMORMISM CARD --- */
+.flttst-card {
+    background: var(--flttst-glass-bg);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid var(--flttst-glass-border);
+    border-radius: 24px;
+    padding: 40px 30px 35px 30px;
+    position: relative;
+    transform-style: preserve-3d; /* Force child elements into isolated 3D layers */
+    will-change: transform, box-shadow;
+    
+    /* Soft Initial Floating Shadow Scheme */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.02),
+                0 5px 15px rgba(46, 139, 87, 0.01);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Interactive Dynamic Mouse Glow Overlay */
+.flttst-glow-layer {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 24px;
+    background: radial-gradient(400px circle at var(--flmouse-x, 0px) var(--flmouse-y, 0px), rgba(46, 139, 87, 0.06), transparent 50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.flttst-card-inner {
+    position: relative;
+    z-index: 2;
+    transform-style: preserve-3d;
+}
+
+/* Elegant Architectural Giant Quote Indicator */
+.flttst-quote-icon {
+    font-size: 5rem;
+    font-family: serif;
+    color: var(--flttst-accent);
+    line-height: 1;
+    position: absolute;
+    top: -30px; left: -5px;
+    opacity: 0.25;
+    transform: translateZ(30px); /* Pops out significantly in 3D */
+    pointer-events: none;
+}
+
+.flttst-feedback {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--flttst-muted);
+    margin: 0 0 35px 0;
+    font-weight: 400;
+    transform: translateZ(20px); /* Mid-level 3D spatial separation */
+}
+
+/* User Branding Information Box footer */
+.flttst-user-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid rgba(46, 139, 87, 0.08);
+    padding-top: 20px;
+    transform: translateZ(25px); /* Primary foreground popping element */
+}
+
+.flttst-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--flttst-accent);
+    box-shadow: 0 8px 20px rgba(46, 139, 87, 0.15);
+    flex-shrink: 0;
+}
+
+.flttst-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.flttst-user-info {
+    text-align: left;
+}
+
+.flttst-user-info h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--flttst-dark);
+    margin: 0 0 3px 0;
+}
+
+.flttst-user-info h4 {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--flttst-accent);
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* --- THE HOVER STATE UPGRADES (Dynamic Shadow & Light Shift) --- */
+.flttst-card:hover {
+    border-color: rgba(46, 139, 87, 0.35);
+    /* Heavy dynamic shadow projection matching client request */
+    box-shadow: 0 35px 70px rgba(46, 139, 87, 0.09),
+                0 15px 35px rgba(0, 0, 0, 0.03);
+}
+
+/* --- ASYMMETRICAL FLOATING ANIMATION TIMINGS --- */
+/* Different cards float at slightly offset wave rhythms to feel deeply premium */
+.flttst-grid .flttst-card:nth-child(1) { will-change: transform; }
+.flttst-grid .flttst-card:nth-child(2) { will-change: transform; }
+.flttst-grid .flttst-card:nth-child(3) { will-change: transform; }
+
+/* --- FULL RESPONSIVE SCREEN CONTROLLERS --- */
+@media (max-width: 1024px) {
+    .flttst-grid { gap: 25px; }
+    .flttst-title { font-size: 2.4rem; }
+}
+
+@media (max-width: 991px) {
+    .flttst-grid { grid-template-columns: 1fr; max-width: 580px; margin: 0 auto; gap: 35px; }
+    .flttst-section { padding: 90px 0; }
+}
+
+@media (max-width: 480px) {
+    .flttst-title { font-size: 2rem; }
+    .flttst-card { padding: 35px 20px 25px 20px; }
+}
+
+
+   /* ========================
+   Testimonials
+   ======================== */
+
+
+/*========================
+ FOOTER
+========================= */
+
+/* --- Imports & System Properties --- */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #fcfcf9;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* --- Core Configuration --- */
+.premium-footer {
+  background: linear-gradient(180deg, #2d4326 0%, #1a2d15 100%);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- 1. Symmetrical CTA Area --- */
+.cta-luxury-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 80px 30px;
+}
+
+.cta-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.cta-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+}
+
+.luxury-badge {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-width: 70px;
+  height: 70px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  color: #d4af37;
+  transition: transform 0.4s ease;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 24px;
+  animation: ripple 3s infinite linear;
+}
+
+.cta-inner h2 {
+  font-family: "Cinzel", serif;
+  color: #ffffff;
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  max-width: 750px;
+}
+
+/* --- 2. Interactive Premium Button --- */
+.premium-btn {
+  background-color: #ffffff;
+  color: #0f1e0d;
+  text-decoration: none;
+  padding: 18px 24px 18px 36px;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.btn-arrow-wrap {
+  background-color: #1a2d15;
+  color: #ffffff;
+  min-width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.btn-arrow-wrap i {
+  position: absolute;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arrow-secondary {
+  transform: translateX(-40px);
+}
+
+.premium-btn:hover {
+  background-color: #d4af37;
+  color: #1a2d15;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+}
+
+.premium-btn:hover .btn-arrow-wrap {
+  background-color: #ffffff;
+  color: #1a2d15;
+}
+
+.premium-btn:hover .arrow-primary {
+  transform: translateX(40px);
+}
+
+.premium-btn:hover .arrow-secondary {
+  transform: translateX(0);
+}
+
+/* --- 3. Core Editorial Panel Area --- */
+.footer-core-panel {
+  background-color: #091308;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  position: relative;
+}
+
+.ambient-glow {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 40%;
+  height: 250px;
+  background: radial-gradient(circle, rgba(74, 114, 66, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+}
+
+.footer-layout-grid {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr 2.4fr;
+  gap: 30px;
+}
+
+/* डाव्या-उजव्या मार्जिनचे प्रमाण (Symmetric Symmetrical alignment) */
+.expertise-column {
+  margin-left: 15px;
+}
+
+.company-column {
+  margin-left: 40px;
+}
+
+.corporate-hq-column {
+  margin-left: auto;
+  width: 100%;
+  max-width: 380px;
+}
+
+.brand-logo-container {
+  margin-bottom: 25px;
+  margin-top: -20px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.monumental-logo-img {
+  height: 100px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+}
+
+.brand-logo-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+.brand-logo-container:hover .monumental-logo-img {
+  transform: scale(1.04);
+  filter: brightness(1.15) contrast(1.02);
+}
+
+.brand-logo-container:hover::after {
+  left: 200%;
+  transition: left 0.9s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+.brand-manifesto {
+  color: #8fa08e;
+  line-height: 1.6;
+}
+
+.company-main-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.company-tagline {
+  color: #cedccd;
+  font-size: 1.05rem;
+  font-weight: 400;
+  display: block;
+}
+
+.premium-social-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.social-magnetic-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a3b1a2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-magnetic-icon:hover {
+  background: #d4af37;
+  color: #091308;
+  border-color: #d4af37;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+
+.column-title {
+  color: #6c7a6b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* नवीन स्टॅटिक लिस्ट विदाऊट लिंक डिझाइन */
+.premium-static-list {
+  list-style: none;
+}
+
+.premium-static-list li {
+  color: #a3b1a2;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* कर्सर पॉईंटर नॉर्मल ठेवला आणि हलका होव्हर इफ़ेक्ट दिला */
+.premium-static-list li:hover {
+  color: #ffffff;
+}
+
+.hq-flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hq-address {
+  font-style: normal;
+  color: #a3b1a2;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.premium-communications .comms-line {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.premium-communications .email {
+  font-size: 1.1rem;
+  color: #d4af37;
+  margin-bottom: 15px;
+}
+
+.phone-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.premium-communications .comms-line:hover {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+/* --- 4. Premium Signature Bar --- */
+.footer-signature-bar {
+  max-width: 1600px;
+  margin: 60px auto 0 auto;
+  padding-top: 35px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #858e84;
+  font-size: 0.95rem;
+  gap: 20px;
+}
+
+.legal-utilities {
+  display: flex;
+  align-items: center;
+}
+
+.utility-link {
+  color: #6a6d68;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.utility-link:hover {
+  color: #d4af37;
+}
+
+.utility-dot {
+  width: 4px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  margin: 0 15px;
+  display: inline-block;
+}
+
+/* --- Animations Keyframes --- */
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* Responsive Grid Engine */
+@media (max-width: 1200px) {
+  .cta-luxury-wrapper { padding: 60px 30px; }
+  .footer-core-panel { padding: 60px 30px 40px 30px; }
+  .footer-layout-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .expertise-column, .company-column, .corporate-hq-column { margin-left: 0; max-width: 100%; }
+  .brand-showcase, .contact-module { grid-column: span 3; }
+  .hq-flex-container { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+}
+
+@media (max-width: 768px) {
+  .cta-luxury-wrapper { padding: 50px 20px; }
+  .footer-core-panel { padding: 60px 20px 40px 20px; }
+  .cta-inner { flex-direction: column; align-items: flex-start; gap: 30px; }
+  .cta-left { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .premium-btn { width: 100%; justify-content: space-between; }
+  .footer-layout-grid { grid-template-columns: 1fr; gap: 35px; }
+  .brand-showcase, .nav-links-module, .contact-module { grid-column: span 1; }
+  .hq-flex-container { flex-direction: column; gap: 20px; }
+  .footer-signature-bar { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+}

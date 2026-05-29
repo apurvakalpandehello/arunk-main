@@ -1,0 +1,1558 @@
+/*========================
+  NAVBAR
+========================= */
+/* --- Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --primary-dark-green: #0a2411;
+  --cgreen: #0b2d13; /* Your custom green color matching the border/overlay tints */
+  --font-editorial: "Cinzel", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --bg-ivory: #f7f7f4;
+  --transition-panel: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-ivory);
+}
+
+/* --- Base Transparent Navbar Configuration --- */
+.premium-navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 1000;
+  background: transparent;
+  border-bottom: 1px solid rgba(11, 45, 19, 0.08);
+  transition: var(--transition-panel);
+}
+
+.nav-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 60px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Premium Logo Integration & Ayatakruti Animation Frame --- */
+.nav-logo-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  text-decoration: none;
+  height: auto;
+  padding: 5px 0;
+}
+
+.premium-nav-logo-img {
+  height: 120px; /* Balanced tracking proportion to match header depth */
+  max-width: 200px; /* Fluid boundary protective layout constraints */
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transform: scale(1);
+  filter: brightness(1) contrast(1);
+  will-change: transform, filter;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+}
+
+/* Horizontal linear flash mask engine */
+.nav-logo-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: none;
+}
+
+/* Header image actions triggers */
+.nav-logo-container:hover .premium-nav-logo-img {
+  transform: scale(1.03);
+  filter: brightness(1.1) contrast(1.01);
+}
+
+.nav-logo-container:hover::after {
+  left: 200%;
+  transition: left 0.9s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+/* --- Menu Grid Links System --- */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+  height: 100%;
+}
+
+.nav-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary-dark-green);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 0;
+}
+
+/* --- Action Button --- */
+.nav-btn {
+  background-color: var(--primary-dark-green);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* --- PURE CSS HOVER CONTROLS --- */
+.premium-navbar:hover {
+  background-color: var(--bg-ivory);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+}
+
+/* --- Base Mobile Toggle Button Styles with Background --- */
+.nav-toggle {
+  display: none;
+  background-color: var(--primary-dark-green);
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  z-index: 1001;
+  padding: 0;
+  box-shadow: 0 4px 15px rgba(10, 36, 17, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-action-wrapper {
+  display: none;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 36, 17, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT RESPONSES (MODIFIED FOR INNER DRAWER NAVIGATION)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .nav-container {
+    padding: 0 30px;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .desktop-only-btn {
+    display: none !important;
+  }
+
+  .mobile-action-wrapper {
+    display: block;
+  }
+
+  .mobile-action-wrapper .nav-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 14px 0;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: var(--bg-ivory);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 110px 40px 40px 40px;
+    gap: 0;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-item {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(11, 45, 19, 0.06);
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 20px 0;
+    justify-content: space-between;
+  }
+
+  .nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 20px;
+  }
+  .premium-nav-logo-img {
+    height: 42px; /* Smooth scale down to optimize viewport overhead on portable panels */
+  }
+}
+
+/*==========================================================================
+  3. HERO PREMIUM SECTION (UPDATED BIGGER TYPOGRAPHY)
+  ========================================================================== */
+.hero-premium-wrap {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 10%;
+  margin-top: 90px;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #f9f9f9 0%, #ffffff 100%);
+}
+
+.hero-shape {
+  position: absolute;
+  filter: blur(80px);
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.15;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--hero-accent);
+  top: -10%;
+  left: -5%;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  bottom: 10%;
+  right: 5%;
+}
+
+.hero-content-inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.hero-mini-tag {
+  font-family: var(--font-main);
+  color: var(--hero-accent);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 25px;
+}
+
+/* --- INCREASED TITLE & RESPONSIVE CONFIG --- */
+.hero-main-title {
+  font-family: var(--font-heading);
+  color: var(--hero-dark-text);
+  line-height: 1.05; 
+  margin-bottom: 35px;
+  perspective: 1000px;
+}
+
+.title-line {
+  display: block;
+  font-size: clamp(45px, 9vw, 165px); /* कमाल साईझ १४०px वरून १६५px केली */
+  word-wrap: break-word;
+  font-weight: 700;
+}
+
+.accent-text {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--hero-dark-text); /* ठळक दिसण्यासाठी २px स्ट्रोक */
+  font-style: italic;
+}
+
+/* --- INCREASED DESCRIPTION BOX --- */
+.hero-description-box {
+  max-width: 750px; /* मोठा टेक्स्ट व्यवस्थित बसण्यासाठी विड्थ वाढवली */
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+.hero-text {
+  font-family: var(--font-main);
+  color: var(--hero-dark-text);
+  font-size: clamp(16px, 1.5vw, 22px); /* कमाल साईझ १८px वरून २२px केली */
+  line-height: 1.65;
+  margin-bottom: 25px;
+  opacity: 0.85;
+}
+
+.hero-line {
+  width: 80px; 
+  height: 2px;
+  background: var(--hero-accent);
+  margin: 0 auto;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--hero-dark-text);
+  text-decoration: none;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 16px;
+  border: 2px solid var(--hero-dark-text);
+  padding: 12px 30px;
+  border-radius: 50px;
+  transition: all 0.4s ease;
+}
+
+.hero-btn-primary:hover {
+  background: var(--hero-dark-text);
+  color: #ffffff;
+}
+
+/* --- 3D CARD DISPLAY AREA --- */
+.hero-visual-card {
+  position: absolute;
+  width: 250px;
+  height: 350px;
+  right: 15%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-visual-card {
+    display: block;
+  }
+}
+
+.card-glass {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+  transform-style: preserve-3d;
+  transition: transform 0.1s;
+}
+
+.card-content h4 {
+  font-family: var(--font-heading);
+  color: var(--hero-dark-text);
+  font-size: 24px;
+}
+
+/*==========================================================================
+  4. RESPONSIVE BREAKPOINTS (MEDIA QUERIES)
+  ========================================================================== */
+@media (max-width: 1024px) {
+  .nav-container {
+    padding: 0 30px;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .desktop-only-btn {
+    display: none !important;
+  }
+
+  .mobile-action-wrapper {
+    display: block;
+  }
+
+  .mobile-action-wrapper .nav-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 14px 0;
+  }
+
+  /* Vertical Drawer Menu */
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: var(--bg-ivory);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 110px 40px 40px 40px;
+    gap: 0;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-item {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(11, 45, 19, 0.06);
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 20px 0;
+    justify-content: space-between;
+  }
+
+  /* Mobile Accordion Drilldown */
+  .mega-dropdown-panel {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 0 20px 10px;
+    background-color: transparent;
+    border-bottom: none;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transform: none;
+    pointer-events: none;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+
+  .nav-item.has-mega-menu.open .mega-dropdown-panel {
+    max-height: 2000px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mega-grid.three-cols {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .mega-card {
+    padding: 8px;
+    gap: 15px;
+  }
+
+  .card-icon {
+    min-width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+  }
+
+  .card-info h4 {
+    font-size: 1rem;
+  }
+
+  /* Hamburger State Transformations */
+  .nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-item.has-mega-menu.open .toggle-icon i {
+    transform: rotate(135deg);
+  }
+
+  /* Touch Screen Kill Hover Configurations */
+  .nav-item.has-mega-menu:hover .mega-dropdown-panel {
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+  }
+  .nav-item.has-mega-menu.open:hover .mega-dropdown-panel {
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-item.has-mega-menu:hover .toggle-icon i {
+    transform: none;
+  }
+  .nav-item.has-mega-menu.open:hover .toggle-icon i {
+    transform: rotate(135deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 20px;
+  }
+  
+  .nav-logo {
+    font-size: 1.8rem;
+  }
+
+  /* Responsive Hero on Mobile Screen Layouts */
+  .hero-premium-wrap {
+    padding: 0 20px;
+    height: auto;
+    min-height: calc(73vh - 90px);
+  }
+
+  .hero-main-title {
+    margin-bottom: 25px;
+  }
+  
+  .accent-text {
+    -webkit-text-stroke: 1.5px var(--hero-dark-text);
+  }
+}
+
+
+/* =========================
+    hero-premium-wrap
+    ========================= */
+
+/* ========================
+    Expertise In
+    ======================== */
+
+/* ==========================================================================
+   Professional Luxury Typography - Clean Sans-Serif & Geometric Fonts Only
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #ffffff; /* Pure crisp white background */
+    color: #111111; /* Sharp high-contrast black text */
+    overflow-x: hidden;
+    letter-spacing: -0.01em; /* Premium tight letter tracking for modern corporate look */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.expertise-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 140px; /* Space between primary sections */
+}
+
+/* Master Layout Grid (Desktop Configuration) */
+.expertise-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* Alternating Grid Logic for Professional Layout Geometry */
+.img-right .content-side { grid-column: 1; }
+.img-right .image-side { grid-column: 2; }
+
+.img-left .content-side { grid-column: 2; }
+.img-left .image-side { grid-column: 1; }
+
+/* ==========================================================================
+   Content Typography & Interface Elements
+   ========================================================================== */
+
+.section-subtitle {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Ultra-clean premium tracking */
+    color: #2E8B57; /* Deep SeaGreen branding accent */
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+
+.section-title {
+    font-family: 'Syne', sans-serif; /* High-end structural corporate font (No Cursive) */
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 26px;
+    color: #111111;
+    letter-spacing: -0.02em; /* Sleek tight layout typography */
+}
+
+.main-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #2d3748; /* Clean Charcoal grey-black for primary block */
+    font-style: normal; /* Completely removed italic layout for pure professional tone */
+    border-left: 3px solid #2E8B57; /* SeaGreen vertical structural graphic */
+    padding-left: 22px;
+    margin-bottom: 22px;
+    font-weight: 400;
+}
+
+.sub-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555; /* Neutral mid-toned charcoal for secondary descriptions */
+    margin-bottom: 32px;
+    font-weight: 400;
+}
+
+.spec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+}
+
+.spec-list {
+    list-style: none;
+    margin-bottom: 38px;
+}
+
+.spec-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: #2d3748;
+    margin-bottom: 14px;
+    line-height: 1.5;
+    font-weight: 500; /* Crisp weight definition */
+}
+
+.spec-list li i {
+    color: #2E8B57; /* SeaGreen checkmark icon elements */
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   Interactive Corporate Action Button
+   ========================================================================== */
+
+.btn-discuss {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    background: linear-gradient(135deg, #2E8B57 0%, #1e5c39 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 6px; /* Architectural sharp corner balance */
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(46, 139, 87, 0.18);
+}
+
+.btn-discuss i {
+    transition: transform 0.3s ease;
+}
+
+.btn-discuss:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(46, 139, 87, 0.35);
+}
+
+.btn-discuss:hover i {
+    transform: translateX(6px); /* Arrow moves slightly on hover */
+}
+
+/* ==========================================================================
+   3D Premium Showcase Graphics Framework
+   ========================================================================== */
+
+.image-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Crucial for deep 3D space calculation */
+}
+
+.tilt-card {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4 / 5;
+    background: rgba(0, 0, 0, 0.01);
+    border-radius: 16px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tilt-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translateZ(30px); /* Pushes the image forward in Z-axis */
+}
+
+.tilt-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.15), transparent);
+    pointer-events: none;
+}
+
+/* Light Theme Professional Shadow Definition */
+.tilt-card:hover {
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08), 0 0 50px rgba(46, 139, 87, 0.06);
+}
+
+.tilt-card:hover img {
+    transform: scale(1.04); /* Subtle non-aggressive micro zoom */
+}
+
+/* ==========================================================================
+   Responsive Architecture Layout Breakpoints (Mobile Optimization)
+   ========================================================================== */
+
+@media (max-width: 991px) {
+    .expertise-container {
+        gap: 80px;
+        padding: 50px 16px;
+    }
+
+    .expertise-section {
+        grid-template-columns: 1fr; /* Force linear stack */
+        gap: 40px;
+    }
+
+    /* Core Requirement: Forces Image to render first, then Content below it */
+    .img-right, .img-left {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image-side {
+        order: 1; /* Explicit top placement */
+        width: 100%;
+    }
+
+    .content-side {
+        order: 2; /* Explicit base placement */
+        width: 100%;
+    }
+
+    .section-title {
+        font-size: 34px;
+        margin-bottom: 20px;
+    }
+
+    .main-desc {
+        font-size: 15px;
+        padding-left: 16px;
+    }
+
+    .tilt-card {
+        max-width: 100%;
+        aspect-ratio: 4 / 3; /* Shorter sleek landscape card for mobile devices */
+    }
+}
+
+/* ========================
+    Expertise In
+    ======================== */
+
+/* ======================
+Landscape Architecture
+====================== */
+
+/* ==========================================================================
+   Premium Corporate Typography - Pure Sans-Serif & Geometric Architecture Fonts
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.landscape-expertise-section {
+    max-width: 1300px;
+    margin: 80px auto;
+    padding: 0 24px;
+    display: grid;
+    /* Two column grid layout: Left Image, Right Content */
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    background-color: #ffffff; /* Premium white background */
+    color: #111111; /* Sharp high-contrast black text */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   Content Side Typography & Elements (Strictly No Cursive)
+   ========================================================================== */
+
+.landscape-subtitle {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Spacious, high-end look */
+    color: #2E8B57; /* Deep SeaGreen branding accent */
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+
+.landscape-title {
+    font-family: 'Syne', sans-serif; /* High-end geometric font for premium engineering/architecture look */
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 26px;
+    color: #111111; 
+    letter-spacing: -0.02em; /* Modern tight kerning */
+}
+
+.landscape-main-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #2d3748; /* Dark Charcoal Black */
+    font-style: normal; /* Completely removed cursive/italic style for corporate trust */
+    border-left: 3px solid #2E8B57; /* SeaGreen vertical border line */
+    padding-left: 22px;
+    margin-bottom: 22px;
+    font-weight: 400;
+}
+
+.landscape-sub-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555; /* Neutral professional greyish-black */
+    margin-bottom: 32px;
+    font-weight: 400;
+}
+
+.landscape-spec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+}
+
+.landscape-spec-list {
+    list-style: none;
+    margin-bottom: 38px;
+}
+
+.landscape-spec-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: #2d3748;
+    margin-bottom: 14px;
+    line-height: 1.5;
+    font-weight: 500; /* Distinct readable weight */
+}
+
+.landscape-spec-list li i {
+    color: #2E8B57; /* SeaGreen Icons */
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   Button with Interactive Structural Glow
+   ========================================================================== */
+
+.landscape-btn-discuss {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    background: linear-gradient(135deg, #2E8B57 0%, #1e5c39 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 6px; /* Sleeker structural radius */
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(46, 139, 87, 0.18);
+}
+
+.landscape-btn-discuss i {
+    transition: transform 0.3s ease;
+}
+
+.landscape-btn-discuss:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(46, 139, 87, 0.35);
+}
+
+.landscape-btn-discuss:hover i {
+    transform: translateX(6px); /* Fluid micro-interaction */
+}
+
+/* ==========================================================================
+   Premium 3D Card Hover Mechanism Framework
+   ========================================================================== */
+
+.landscape-image-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Activates Z-axis depth */
+}
+
+.landscape-tilt-card {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4 / 5;
+    background: rgba(0, 0, 0, 0.01); /* Crisp minimal boundary */
+    border-radius: 16px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landscape-tilt-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translateZ(30px); /* Extrudes image forward in 3D viewport */
+}
+
+.landscape-tilt-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landscape-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.15), transparent);
+    pointer-events: none;
+}
+
+/* Light Mode Luxury Soft Shadow Definition */
+.landscape-tilt-card:hover {
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08), 0 0 50px rgba(46, 139, 87, 0.06);
+}
+
+.landscape-tilt-card:hover img {
+    transform: scale(1.04); /* Balanced corporate zoom scale */
+}
+
+/* ==========================================================================
+   MOBILE VIEW - Order Management Breakpoint Optimization
+   ========================================================================== */
+
+@media (max-width: 991px) {
+    .landscape-expertise-section {
+        display: flex;
+        flex-direction: column; /* Grid breaks to flexible column stack */
+        gap: 40px;
+        padding: 50px 16px;
+        margin: 40px auto;
+    }
+
+    /* Standardized mobile behavior: Image remains top, content at bottom */
+    .landscape-image-side {
+        order: 1; 
+        width: 100%;
+    }
+
+    .landscape-content-side {
+        order: 2; 
+        width: 100%;
+    }
+
+    .landscape-title {
+        font-size: 34px;
+        margin-bottom: 20px;
+    }
+
+    .landscape-main-desc {
+        font-size: 15px;
+        padding-left: 16px;
+    }
+
+    .landscape-tilt-card {
+        max-width: 100%;
+        aspect-ratio: 4 / 3; /* Highly optimized aesthetic format for touch devices */
+    }
+}
+
+/* ======================
+Landscape Architecture
+====================== */
+
+/*========================
+ FOOTER
+========================= */
+
+/* --- Imports & System Properties --- */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #fcfcf9;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* --- Core Configuration --- */
+.premium-footer {
+  background: linear-gradient(180deg, #2d4326 0%, #1a2d15 100%);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- 1. Symmetrical CTA Area --- */
+.cta-luxury-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 80px 30px;
+}
+
+.cta-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.cta-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+}
+
+.luxury-badge {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-width: 70px;
+  height: 70px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  color: #d4af37;
+  transition: transform 0.4s ease;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 24px;
+  animation: ripple 3s infinite linear;
+}
+
+.cta-inner h2 {
+  font-family: "Cinzel", serif;
+  color: #ffffff;
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  max-width: 750px;
+}
+
+/* --- 2. Interactive Premium Button --- */
+.premium-btn {
+  background-color: #ffffff;
+  color: #0f1e0d;
+  text-decoration: none;
+  padding: 18px 24px 18px 36px;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.btn-arrow-wrap {
+  background-color: #1a2d15;
+  color: #ffffff;
+  min-width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.btn-arrow-wrap i {
+  position: absolute;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arrow-secondary {
+  transform: translateX(-40px);
+}
+
+.premium-btn:hover {
+  background-color: #d4af37;
+  color: #1a2d15;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+}
+
+.premium-btn:hover .btn-arrow-wrap {
+  background-color: #ffffff;
+  color: #1a2d15;
+}
+
+.premium-btn:hover .arrow-primary {
+  transform: translateX(40px);
+}
+
+.premium-btn:hover .arrow-secondary {
+  transform: translateX(0);
+}
+
+/* --- 3. Core Editorial Panel Area --- */
+.footer-core-panel {
+  background-color: #091308;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  position: relative;
+}
+
+.ambient-glow {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 40%;
+  height: 250px;
+  background: radial-gradient(circle, rgba(74, 114, 66, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+}
+
+.footer-layout-grid {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr 2.4fr;
+  gap: 30px;
+}
+
+/* डाव्या-उजव्या मार्जिनचे प्रमाण (Symmetric Symmetrical alignment) */
+.expertise-column {
+  margin-left: 15px;
+}
+
+.company-column {
+  margin-left: 40px;
+}
+
+.corporate-hq-column {
+  margin-left: auto;
+  width: 100%;
+  max-width: 380px;
+}
+
+.brand-logo-container {
+  margin-bottom: 25px;
+  margin-top: -20px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.monumental-logo-img {
+  height: 100px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+}
+
+.brand-logo-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+.brand-logo-container:hover .monumental-logo-img {
+  transform: scale(1.04);
+  filter: brightness(1.15) contrast(1.02);
+}
+
+.brand-logo-container:hover::after {
+  left: 200%;
+  transition: left 0.9s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+.brand-manifesto {
+  color: #8fa08e;
+  line-height: 1.6;
+}
+
+.company-main-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.company-tagline {
+  color: #cedccd;
+  font-size: 1.05rem;
+  font-weight: 400;
+  display: block;
+}
+
+.premium-social-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.social-magnetic-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a3b1a2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-magnetic-icon:hover {
+  background: #d4af37;
+  color: #091308;
+  border-color: #d4af37;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+
+.column-title {
+  color: #6c7a6b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* नवीन स्टॅटिक लिस्ट विदाऊट लिंक डिझाइन */
+.premium-static-list {
+  list-style: none;
+}
+
+.premium-static-list li {
+  color: #a3b1a2;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* कर्सर पॉईंटर नॉर्मल ठेवला आणि हलका होव्हर इफ़ेक्ट दिला */
+.premium-static-list li:hover {
+  color: #ffffff;
+}
+
+.hq-flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hq-address {
+  font-style: normal;
+  color: #a3b1a2;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.premium-communications .comms-line {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.premium-communications .email {
+  font-size: 1.1rem;
+  color: #d4af37;
+  margin-bottom: 15px;
+}
+
+.phone-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.premium-communications .comms-line:hover {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+/* --- 4. Premium Signature Bar --- */
+.footer-signature-bar {
+  max-width: 1600px;
+  margin: 60px auto 0 auto;
+  padding-top: 35px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #858e84;
+  font-size: 0.95rem;
+  gap: 20px;
+}
+
+.legal-utilities {
+  display: flex;
+  align-items: center;
+}
+
+.utility-link {
+  color: #6a6d68;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.utility-link:hover {
+  color: #d4af37;
+}
+
+.utility-dot {
+  width: 4px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  margin: 0 15px;
+  display: inline-block;
+}
+
+/* --- Animations Keyframes --- */
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* Responsive Grid Engine */
+@media (max-width: 1200px) {
+  .cta-luxury-wrapper { padding: 60px 30px; }
+  .footer-core-panel { padding: 60px 30px 40px 30px; }
+  .footer-layout-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .expertise-column, .company-column, .corporate-hq-column { margin-left: 0; max-width: 100%; }
+  .brand-showcase, .contact-module { grid-column: span 3; }
+  .hq-flex-container { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+}
+
+@media (max-width: 768px) {
+  .cta-luxury-wrapper { padding: 50px 20px; }
+  .footer-core-panel { padding: 60px 20px 40px 20px; }
+  .cta-inner { flex-direction: column; align-items: flex-start; gap: 30px; }
+  .cta-left { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .premium-btn { width: 100%; justify-content: space-between; }
+  .footer-layout-grid { grid-template-columns: 1fr; gap: 35px; }
+  .brand-showcase, .nav-links-module, .contact-module { grid-column: span 1; }
+  .hq-flex-container { flex-direction: column; gap: 20px; }
+  .footer-signature-bar { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+}
